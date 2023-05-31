@@ -1,0 +1,21 @@
+version: "2.2"
+
+services:
+    flask:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        image: scetts/2023tts-server:v2
+        cpus: 1
+        restart: unless-stopped
+        environment:
+            - "TTS_MODEL_FILE=/content/models/glowtts-v2/best_model.pth.tar"
+            - "TTS_MODEL_CONFIG=/content/models/glowtts-v2/config.json"
+            #- "VOCODER_MODEL_FILE=/content/models/hifigan-v2/best_model.pth.tar"
+            #- "VOCODER_MODEL_CONFIG=/content/models/hifigan-v2/config.json"
+            # - "VOCODER_MODEL_ONNX=/content/models/hifigan-v2/hifigan.onnx"
+        volumes:
+            - "./data/src/flask:/content/src/flask"
+            - "./data/models:/content/models"
+        ports: 
+            - "5001:5001"
